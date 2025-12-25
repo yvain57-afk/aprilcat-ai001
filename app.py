@@ -22,18 +22,23 @@ ph_date = random.choice(placeholders["date"])
 ph_loc = random.choice(placeholders["location"])
 ph_zodiac = random.choice(placeholders["zodiac"])
 
-# CSS 样式注入 (深色高级感)
+# CSS 样式注入 (强制高对比度 & 深色模式适配)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600&display=swap');
     
-    /* 全局背景：玄学深空渐变 */
+    /* 全局强制深色背景 */
     .stApp {
-        background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+        background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
         color: #E0E0E0;
         font-family: 'Inter', sans-serif;
     }
     
+    /* 强制所有文本颜色为亮色 (解决文字太黑看不清的问题) */
+    p, label, span, div {
+        color: #E0E0E0 !important;
+    }
+
     /* 标题样式 */
     h1 {
         font-weight: 200 !important;
@@ -41,31 +46,42 @@ st.markdown("""
         letter-spacing: 3px;
         font-size: 2.2rem !important;
         text-transform: uppercase;
-        text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        text-shadow: 0 0 15px rgba(255,255,255,0.3);
+        margin-bottom: 10px !important;
     }
     h3 {
         font-weight: 300 !important;
         color: #B0B0B0 !important;
         font-size: 1rem !important;
         letter-spacing: 1px;
+        opacity: 0.8;
     }
     
-    /* 核心区域：毛玻璃卡片风格 */
+    /* 核心卡片区域 - 增加对比度 */
     [data-testid="stForm"] {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.05); /*稍微亮一点的玻璃*/
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         padding: 30px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
     }
 
-    /* 输入框美化 */
+    /* 输入框标题 (Label) - 强制高亮白 */
+    .stTextInput label, .stSelectbox label {
+        color: #FFFFFF !important;
+        font-weight: 500 !important;
+        font-size: 14px !important;
+        letter-spacing: 0.5px;
+        margin-bottom: 5px !important;
+    }
+
+    /* 输入框本体 - 深邃背景 + 亮色文字 */
     .stTextInput input, .stSelectbox div[data-baseweb="select"] > div {
-        background-color: rgba(0, 0, 0, 0.4) !important;
-        color: #E0E0E0 !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        background-color: rgba(0, 0, 0, 0.6) !important; /* 更深的背景，突出文字 */
+        color: #FFFFFF !important; /* 输入的字必须是纯白 */
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
         border-radius: 8px !important;
     }
     
@@ -73,7 +89,7 @@ st.markdown("""
     .stButton>button {
         width: 100%;
         background: linear-gradient(90deg, #7928CA 0%, #FF0080 100%);
-        color: #FFFFFF;
+        color: #FFFFFF !important;
         border: none;
         border-radius: 8px;
         height: 55px;
@@ -82,9 +98,11 @@ st.markdown("""
         letter-spacing: 2px;
         text-transform: uppercase;
         box-shadow: 0 4px 15px rgba(121, 40, 202, 0.4);
+        margin-top: 15px;
     }
     .stButton>button:hover {
-        box-shadow: 0 8px 25px rgba(121, 40, 202, 0.6);
+        box-shadow: 0 8px 25px rgba(121, 40, 202, 0.8);
+        transform: scale(1.02);
     }
     
     /* 底部品牌栏 */
@@ -93,25 +111,25 @@ st.markdown("""
         left: 0;
         bottom: 0;
         width: 100%;
-        background: rgba(14, 17, 23, 0.8);
+        background: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(5px);
-        color: #666;
+        color: #888 !important;
         text-align: center;
         padding: 12px;
-        font-size: 10px;
+        font-size: 11px;
         font-family: 'Courier New', monospace;
         letter-spacing: 2px;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
         z-index: 999;
     }
     .brand-mark {
-        color: #999;
+        color: #ccc !important;
         font-weight: bold;
     }
     
     /* 侧边栏调整 */
     section[data-testid="stSidebar"] {
-        background-color: #12141C;
+        background-color: #0E1117;
         border-right: 1px solid rgba(255,255,255,0.05);
     }
     </style>
