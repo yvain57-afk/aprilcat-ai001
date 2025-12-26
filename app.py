@@ -24,23 +24,29 @@ if "placeholders" not in st.session_state:
         "zodiac": random.choice(raw_placeholders["zodiac"])
     }
 
-# --- CSS 全新轻奢风格注入 ---
+# --- CSS 全新轻奢风格注入 (含隐藏菜单代码) ---
 st.markdown("""
     <style>
-    /* 引入高级字体：Cinzel Decorative(标题装饰), Inter(正文极简) */
+    /* 引入高级字体 */
     @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
     
-    /* 全局背景：柔和的奶油米色渐变，干净通透 */
+    /* === 核心：隐藏 Streamlit 自带UI === */
+    #MainMenu {visibility: hidden;} /* 藏掉右上角菜单 */
+    .stDeployButton {display:none;} /* 藏掉Deploy按钮 */
+    footer {visibility: hidden;}    /* 藏掉默认页脚 */
+    /* ============================== */
+
+    /* 全局背景：柔和的奶油米色渐变 */
     .stApp {
         background: linear-gradient(to bottom, #FDFBFB, #F4F0EC);
-        color: #4A4A4A; /* 深灰文字，比纯黑更柔和 */
+        color: #4A4A4A;
         font-family: 'Inter', sans-serif;
     }
     
-    /* 标题样式：使用优雅的衬线体，配合玫瑰金渐变色 */
+    /* (以下是你之前的漂亮样式，保持不变) */
     h1 {
         font-family: 'Cinzel Decorative', serif !important;
-        background: linear-gradient(45deg, #B76E79, #D4AF37); /* 玫瑰金到香槟金 */
+        background: linear-gradient(45deg, #B76E79, #D4AF37);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-weight: 700 !important;
@@ -49,66 +55,53 @@ st.markdown("""
         text-align: center;
         margin-bottom: 10px !important;
     }
-    /* 副标题 */
     h3 {
         font-family: 'Inter', sans-serif !important;
-        color: #8E8E93 !important; /* 苹果风格的灰色 */
+        color: #8E8E93 !important;
         font-size: 0.9rem !important;
         text-align: center;
         font-weight: 400 !important;
         letter-spacing: 1px;
         text-transform: uppercase;
     }
-    
-    /* 核心卡片区域：苹果风格的干净白卡片，带柔和阴影 */
     [data-testid="stForm"] {
         background: #FFFFFF;
-        border-radius: 24px; /* 更大的圆角，更柔和 */
-        box-shadow: 0 10px 40px rgba(183, 110, 121, 0.15); /* 淡淡的玫瑰色阴影 */
+        border-radius: 24px;
+        box-shadow: 0 10px 40px rgba(183, 110, 121, 0.15);
         padding: 40px;
         border: 1px solid rgba(255, 255, 255, 0.8);
     }
-    
-    /* 表单小标题 */
     [data-testid="stForm"] h4 {
-        color: #B76E79 !important; /* 玫瑰金色 */
+        color: #B76E79 !important;
         font-family: 'Inter', sans-serif;
         font-weight: 600;
         text-align: center;
         margin-bottom: 25px;
     }
-
-    /* 输入框标签 */
     .stTextInput label, .stSelectbox label {
         color: #666666 !important;
         font-weight: 500 !important;
         font-size: 13px !important;
     }
-    
-    /* 输入框本体：极简白底，细边框 */
     .stTextInput input, .stSelectbox div[data-baseweb="select"] > div {
         background-color: #F9F9F9 !important;
         color: #333333 !important;
-        border: 1px solid #E5E5EA !important; /* 苹果风格的浅灰边框 */
+        border: 1px solid #E5E5EA !important;
         border-radius: 12px !important;
         padding-left: 15px;
         transition: all 0.3s ease;
     }
-    /* 输入框聚焦时的高光 */
     .stTextInput input:focus, .stSelectbox div[data-baseweb="select"] > div:focus-within {
-        border-color: #B76E79 !important; /* 聚焦变成玫瑰金 */
+        border-color: #B76E79 !important;
         background-color: #FFFFFF !important;
         box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.1);
     }
-    
-    /* 按钮美化：渐变胶囊按钮 */
     .stButton>button {
         width: 100%;
-        /* 柔和的玫瑰金到淡紫色的渐变 */
         background: linear-gradient(135deg, #CBA475 0%, #B76E79 50%, #9E8FB2 100%);
         color: white !important;
         border: none;
-        border-radius: 30px; /* 胶囊形状 */
+        border-radius: 30px;
         height: 50px;
         font-size: 15px;
         font-weight: 600;
@@ -121,8 +114,6 @@ st.markdown("""
         transform: translateY(-2px);
         box-shadow: 0 12px 25px rgba(183, 110, 121, 0.4);
     }
-    
-    /* 底部品牌栏：干净的浅色 */
     .footer {
         position: fixed; left: 0; bottom: 0; width: 100%;
         background: rgba(255, 255, 255, 0.9);
@@ -132,23 +123,18 @@ st.markdown("""
         border-top: 1px solid #F0F0F0; z-index: 999;
     }
     .brand-mark { color: #B76E79 !important; font-weight: 600; }
-    
-    /* 侧边栏调整为浅色 */
     section[data-testid="stSidebar"] {
         background-color: #FDFBFB;
         border-right: 1px solid #F0F0F0;
     }
     section[data-testid="stSidebar"] h3 { color: #333 !important; text-align: left; }
     section[data-testid="stSidebar"] p, section[data-testid="stSidebar"] li { color: #666 !important; }
-    
-    /* 分析结果区域的美化 */
     .stSuccess {
         background-color: rgba(183, 110, 121, 0.1) !important;
         border: none !important;
         color: #B76E79 !important;
         border-radius: 12px;
     }
-    /* Markdown 结果标题 */
     h2 {
         font-family: 'Cinzel Decorative', serif !important;
         color: #B76E79 !important;
