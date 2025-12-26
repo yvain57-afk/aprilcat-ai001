@@ -117,7 +117,7 @@ def get_mcst_analysis(user_data):
     generation_config = {
         "temperature": 0.85, "top_p": 0.95, "top_k": 40, "max_output_tokens": 8192,
     }
-    model = genai.GenerativeModel(model_name="gemini-1.5-pro", generation_config=generation_config)
+    model = genai.GenerativeModel(model_name="gemini-2.5-flash", generation_config=generation_config)
 
     system_prompt = f"""
     **SYSTEM ROLE**
